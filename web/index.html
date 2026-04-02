@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musakui — Random String & Number Generator</title>
+  <link rel="icon" type="image/png" href="assets/musakui.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- FOUC Prevention -->
+  <script>
+    (function () {
+      const storedTheme = localStorage.getItem("theme");
+      const theme = storedTheme ||
+        (globalThis.matchMedia &&
+            globalThis.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <div class="header-brand">
+          <img src="assets/musakui.png" alt="Musakui Logo" class="logo" width="32" height="32">
+          <h1>Musakui — Random String & Number Generator</h1>
+        </div>
+        <div class="header-actions">
+          <a href="https://yogu.one" class="header-btn" title="Back to yogu.one" aria-label="Back to yogu.one">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </a>
+          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+          </button>
+        </div>
+      </div>
+      <div class="header-accent"></div>
+    </header>
+
+    <main>
+      <div class="app-grid">
+        <!-- Random String Generator -->
+        <section class="card" id="string-generator">
+          <h2>Random String</h2>
+          
+          <div class="form-group">
+            <label class="form-label" for="string-length">Length: <span id="length-val">16</span></label>
+            <div class="input-row">
+              <input type="range" id="string-length" min="1" max="128" value="16">
+              <input type="number" id="string-length-num" class="input-number" min="1" max="128" value="16">
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" id="include-upper" checked> Uppercase
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" id="include-lower" checked> Lowercase
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" id="include-numbers" checked> Numbers
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" id="include-symbols"> Symbols
+            </label>
+          </div>
+
+          <div class="presets-row">
+            <span class="form-label" style="width: 100%; margin-bottom: 0.5rem;">Presets</span>
+            <button class="btn-preset" data-preset="hex">Hexadecimal</button>
+            <button class="btn-preset" data-preset="base64">Base64</button>
+            <button class="btn-preset" data-preset="password">Secure Password</button>
+            <button class="btn-preset" data-preset="reset">Reset</button>
+          </div>
+
+          <div class="action-row">
+            <button id="generate-string" class="btn-primary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path></svg>
+              Generate String
+            </button>
+          </div>
+
+          <div class="result-container">
+            <div class="result-header">
+              <span class="result-label">Result</span>
+              <button id="copy-string" class="btn-copy">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+                Copy
+              </button>
+            </div>
+            <div id="string-display" class="result-display">...</div>
+          </div>
+        </section>
+
+        <!-- Random Number Generator -->
+        <section class="card" id="number-generator">
+          <h2>Random Numbers</h2>
+
+          <div class="form-group">
+            <div style="display: flex; gap: var(--spacing-md);">
+              <div style="flex: 1;">
+                <label class="form-label" for="num-min">Min</label>
+                <input type="number" id="num-min" class="input-number" style="width: 100%;" value="1">
+              </div>
+              <div style="flex: 1;">
+                <label class="form-label" for="num-max">Max</label>
+                <input type="number" id="num-max" class="input-number" style="width: 100%;" value="100">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="num-count">Count: <span id="count-val">1</span></label>
+            <div class="input-row">
+              <input type="range" id="num-count" min="1" max="100" value="1">
+              <input type="number" id="num-count-num" class="input-number" min="1" max="100" value="1">
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" id="unique-numbers"> Unique Numbers Only
+            </label>
+          </div>
+
+          <div class="action-row" style="margin-top: 5.75rem;"> <!-- Align with string generator button -->
+            <button id="generate-numbers" class="btn-primary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path></svg>
+              Generate Numbers
+            </button>
+          </div>
+
+          <div class="result-container">
+            <div class="result-header">
+              <span class="result-label">Result</span>
+              <button id="copy-numbers" class="btn-copy">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+                Copy All
+              </button>
+            </div>
+            <div id="number-display" class="result-display">
+              <ul class="number-list">...</ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Musakui. Licensed under GNU GPL v3.</p>
+      <nav class="footer-nav" style="margin-top: 0.5rem;">
+        <a href="https://gitlab.com/yogu-one/musakui">Project on GitLab</a>
+      </nav>
+    </footer>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/theme.js"></script>
+  <script src="js/musakui.js"></script>
+</body>
+</html>
