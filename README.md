@@ -1,6 +1,6 @@
 # Musakui — Random String & Number Generator
 
-Musakui (Japanese for "random") is a clean, modern, and secure tool for generating random strings and numbers directly in your browser. It provides a highly customizable interface for everything from generating secure passwords to random sampling from a range.
+Musakui is a clean, modern, and secure tool for generating random strings and numbers directly in your browser. It provides a highly customizable interface for everything from generating secure passwords to random sampling from a range.
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://musakui.yogu.one)
 [![Licence: GPL v3](https://img.shields.io/badge/Licence-GPLv3-blue.svg)](LICENSE)
